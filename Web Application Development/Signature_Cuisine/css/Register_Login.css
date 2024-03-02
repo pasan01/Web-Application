@@ -1,0 +1,68 @@
+@charset "utf-8";
+/* CSS Document */
+
+.form-container{
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	padding-bottom: 60px;
+	background: #eee;
+}
+
+form{
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+	background: #fff;
+	text-align: center;
+	width: 500px;
+	font-family: cursive;
+}
+
+form h3{
+	font-size: 30px;
+	text-transform: uppercase;
+	margin-bottom: 10px;
+	color: #FA696C;
+}
+
+form input,
+form select{
+	width: 90%;
+	padding: 10px 15px;
+	font-size: 17px;
+	margin: 8px 0;
+	background: #eee;
+	border-radius: 5px;
+	border-color: azure;
+}
+
+form select option{
+	background: #fff;
+}
+
+form .form-btn{
+	background: #fbd0d9;
+	color: crimson;
+	text-transform: capitalize;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+form .form-btn:hover{
+	background: #FA696C;
+	color: #fff;
+	transition: 0.5s ease;	
+}
+
+p{
+	margin-top: 10px;
+	font-size: 20px;
+	color: #333;
+}
+
+p a{
+	color: crimson;
+}

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signature Cuisine - Reservation</title>
+  <link rel="stylesheet" href="css/Res2style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="nav-bar">
+      <h1 class="title"><span>Signature</span>Cuisine</h1>
+      <ul class="page">
+        <li><a href="Index.html">Home</a></li>
+        <li><a href="Menu.html">Menu</a></li>
+        <li><a href="Reservation2.html">Reservation</a></li>
+        <li><a href="AboutUs.html">About Us</a></li>
+        <li><a href="ContactUs.html">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Picture Gallery -->
+    <div class="gallery">
+      <img src="img/Restaurant_Interior_1.jpg" alt="">
+      <img src="img/Restaurant_Interior_2.jpg" alt="">      
+      <img src="img/Restaurant_Interior_3.jpg" alt="">
+    </div>
+
+    <!-- Reservation Form -->
+    <div class="reservation">
+      <h2 class="title-1">Make your reservation now</h2>
+      <form action="submit_reservation.php" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="people">Number of People:</label>
+        <input type="text" id="people" name="people" required>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" required>
+        <button type="submit">Submit Reservation</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2023 Signature Cuisine. All rights reserved.</p>
+  </footer>
+	
+
+</body>
+</html>

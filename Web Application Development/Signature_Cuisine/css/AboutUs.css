@@ -1,0 +1,153 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	margin: 0;
+}
+
+.header {
+  color: #fff;
+  padding: 0px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 50px 5px 0px;
+	  background-color: rgba(0, 0, 0, 0.7);
+}
+
+
+.nav-bar .title {
+  color: #fff;
+  font-size: 50px;
+  font-weight: 600;
+  padding: 0px 30px;
+}
+
+span {
+  color: #BCFD4C;
+  font-weight: bold;
+  border-radius: 2px;
+}
+
+
+.page li {
+  list-style: none;
+  display: inline-block;
+}
+
+
+.page li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 150%;
+  font-weight: 600;
+  margin-left: 25px;
+  transition: .4s ease;
+}
+
+
+.page li a:hover {
+  color: #BCFD4C;
+  padding: 10px 20px;
+  border: 2px solid;
+  cursor: pointer;
+}
+
+.container {
+  height: calc(100vh - 40px);
+  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: auto;
+}
+
+.container::before {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url("../img/Index_Wallpaper.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: -1;
+}
+
+
+.about-us{
+  margin-top: 150px;
+  padding: 0px 78px;
+  font-size: 150%;
+  color: #646464;
+  line-height: 1.6;
+  text-align: center;
+  position: relative;
+}
+
+h2{
+	color: #CA6263;
+}
+
+
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+
+.contact-info {
+  margin-bottom: 20px;
+}
+
+.contact-info h3 {
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.contact-info p {
+  margin: 5px 0;
+}
+
+
+.location-map {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.location-map h3 {
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+
+iframe {
+  border: 0;
+  width: 100%;
+  max-width: 600px;
+  height: 450px;
+}
+
+
+footer p {
+  margin: 10px 0 0;
+}
