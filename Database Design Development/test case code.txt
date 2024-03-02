@@ -1,0 +1,199 @@
+USE [Travel_Classics]
+GO
+
+
+ALTER PROCEDURE [SQLCop].[test Column Name Problems]
+AS
+BEGIN
+	
+	
+	SET NOCOUNT ON
+	
+	DECLARE @Output VarChar(max)
+	SET @Output = ''
+			
+	SELECT 	@Output = @Output + TABLE_SCHEMA + '.' + TABLE_NAME + '.' + COLUMN_NAME + Char(13) + Char(10)
+	FROM	INFORMATION_SCHEMA.COLUMNS
+	WHERE	COLUMN_NAME COLLATE SQL_LATIN1_GENERAL_CP1_CI_AI LIKE '%[^a-z_$]%'
+			And TABLE_SCHEMA <> 'tSQLt'
+	Order By TABLE_SCHEMA,TABLE_NAME,COLUMN_NAME
+
+	If @Output > '' 
+		Begin
+			Set @Output = Char(13) + Char(10) 
+						  + Char(13) + Char(10) 
+						  + Char(13) + Char(10) 
+						  + @Output
+			EXEC tSQLt.Fail @Output
+		End
+	  
+END;
+
+
+
+
+
+
+
+USE [Travel_Classics]
+GO
+
+
+ALTER PROCEDURE [SQLCop].[test Column data types (Numeric vs. Int)]
+AS
+BEGIN
+	
+	
+	SET NOCOUNT ON
+	
+	Declare @Output VarChar(max)
+	Set @Output = ''
+
+	Select	@Output = @Output + ProblemItem + Char(13) + Char(10)
+	From	(
+			SELECT	TABLE_SCHEMA + '.' + TABLE_NAME + '.' + COLUMN_NAME As ProblemItem
+            FROM	INFORMATION_SCHEMA.COLUMNS C
+            WHERE	C.DATA_TYPE IN ('numeric','decimal') 
+					AND NUMERIC_SCALE = 0 
+					AND NUMERIC_PRECISION <= 18
+					AND TABLE_SCHEMA <> 'tSQLt'
+			) As Problems
+	Order By ProblemItem
+
+	If @Output > '' 
+		Begin
+			Set @Output = Char(13) + Char(10) 
+						  + 'For more information:  '
+						  + 'http://blogs.lessthandot.com/index.php/DataMgmt/DataDesign/sql-server-types-numeric-vs-int' 
+						  + Char(13) + Char(10) 
+						  + Char(13) + Char(10) 
+						  + @Output
+			EXEC tSQLt.Fail @Output
+		End
+	
+END;
+
+
+
+
+USE [Travel_Classics]
+GO
+
+
+ALTER PROCEDURE [SQLCop].[test Table name problems]
+AS
+BEGIN
+	
+	
+	SET NOCOUNT ON
+	
+	DECLARE @Output VarChar(max)
+    DECLARE @AcceptableSymbols VARCHAR(100)
+
+    SET @AcceptableSymbols = '_$'
+	SET @Output = ''
+
+	SELECT  @Output = @Output + TABLE_SCHEMA + '.' + TABLE_NAME + Char(13) + Char(10)
+    FROM    INFORMATION_SCHEMA.TABLES
+    WHERE   TABLE_NAME COLLATE SQL_LATIN1_GENERAL_CP1_CI_AI Like '%[^a-z' + @AcceptableSymbols + ']%'
+			AND TABLE_SCHEMA <> 'tSQLt'
+	ORDER BY TABLE_SCHEMA,TABLE_NAME
+
+	If @Output > '' 
+		Begin
+			Set @Output = Char(13) + Char(10) 
+						 
+						  + Char(13) + Char(10) 
+						  + Char(13) + Char(10) 
+						  + @Output
+			EXEC tSQLt.Fail @Output
+		End
+END;
+
+
+
+
+
+USE [Travel_Classics]
+GO
+
+
+ALTER PROCEDURE [SQLCop].[test Tables without a primary key]
+AS
+BEGIN
+	
+	SET NOCOUNT ON
+	
+	DECLARE @Output VarChar(max)
+	SET @Output = ''
+
+	SELECT	@Output = @Output + su.name + '.' + AllTables.Name + Char(13) + Char(10)
+	FROM	(
+			SELECT	Name, id, uid
+			From	sysobjects
+			WHERE	xtype = 'U'
+			) AS AllTables
+			INNER JOIN sysusers su
+				On AllTables.uid = su.uid
+			LEFT JOIN (
+				SELECT parent_obj
+				From sysobjects
+				WHERE  xtype = 'PK'
+				) AS PrimaryKeys
+				ON AllTables.id = PrimaryKeys.parent_obj
+	WHERE	PrimaryKeys.parent_obj Is Null
+			AND su.name <> 'tSQLt'
+	ORDER BY su.name,AllTables.Name
+
+	If @Output > '' 
+		Begin
+			Set @Output = Char(13) + Char(10) 
+						  
+						  + Char(13) + Char(10) 
+						  + Char(13) + Char(10) 
+						  + @Output
+			EXEC tSQLt.Fail @Output
+		End	
+END;
+
+
+
+
+USE [Travel_Classics]
+GO
+
+
+ALTER PROCEDURE [SQLCop].[test Tables without any data]
+AS
+BEGIN
+	
+	
+	SET NOCOUNT ON
+	
+	DECLARE @Output VarChar(max)
+	SET @Output = ''
+
+	CREATE TABLE #EmptyTables(Table_Name VarChar(100))  
+	EXEC 	sp_MSforeachtable 'IF NOT EXISTS(SELECT 1 FROM ?) INSERT INTO #EmptyTables VALUES(''?'')' 
+	SELECT	@Output = @Output + Table_Name + Char(13) + Char(10)
+	FROM	#EmptyTables 
+	Where	Left(Table_Name, 7) <> '[tSQLt]'
+	ORDER BY Table_Name 
+	DROP TABLE #EmptyTables
+
+	If @Output > '' 
+		Begin
+			Set @Output = Char(13) + Char(10) 
+						  
+						  + Char(13) + Char(10) 
+						  + Char(13) + Char(10) 
+						  + @Output
+			EXEC tSQLt.Fail @Output
+		End	  
+END;
+
+
+
+
+
+
